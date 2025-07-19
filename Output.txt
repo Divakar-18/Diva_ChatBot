@@ -1,0 +1,22 @@
+Sample Chatbot Output (Console View)
+
+🤖 Welcome to our E-Commerce Policy Chatbot!
+👤 May I know your name? Divakar
+Hello, Divakar! How can I assist you today?
+Type 'help' anytime to see topics or 'exit' to quit.
+==================================================
+
+Divakar: What is the return policy?
+🤖 Bot: Returns are accepted within 7 days of delivery. Pickup is scheduled within 3 business days of approval.
+
+Divakar: How long does delivery take?
+🤖 Bot: Delivery takes 5–7 business days. Delays can happen due to weather or logistics issues.
+
+Divakar: Is COD available?
+🤖 Bot: We accept Credit/Debit cards, Net Banking, UPI, Wallets, and COD for orders below ₹10,000.
+
+Divakar: Thank you
+🤖 Bot: You're welcome! 😊
+
+Divakar: exit
+🤖 Bot: Thank you for chatting with us! Have a great day! 👋
