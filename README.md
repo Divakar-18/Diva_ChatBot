@@ -34,7 +34,7 @@ It helps users by answering frequently asked questions about e-commerce policies
 
 1. Install Python (v3+)
 2. Clone this repo or download `chatbot.py`
-3. Run using: ---
+3. Run using: Python chatbot.py
 
-🧑‍💻 Developed by: Divakar I  
-📅 Internship Task – Week 1
+#Developed by: Divakar I  
+#Internship Task – Week 1
