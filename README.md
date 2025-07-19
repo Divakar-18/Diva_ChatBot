@@ -24,7 +24,7 @@ It helps users by answering frequently asked questions about e-commerce policies
 
 | File Name       | Description                          |
 |-----------------|--------------------------------------|
-| `chatbot.py`    | Python source code of the chatbot    |
+| `ecommerce_chatbot.py`    | Python source code of the chatbot    |
 | `output.txt`    | Sample output from chatbot running   |
 | `README.md`     | Project details and description      |
 
