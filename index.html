@@ -2,19 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>E-Commerce Policy Chatbot</title>
+    <title>PolicyBot – E-Commerce Assistant</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="chat-container">
-    <h2>🤖 E-Commerce Policy Chatbot</h2>
+<div class="app">
+    <div class="chat-header">
+        <div class="bot-avatar">🤖</div>
+        <div>
+            <h3>PolicyBot</h3>
+            <span class="status">Online</span>
+        </div>
+    </div>
 
-    <div id="chat-box"></div>
+    <div id="chat-box" class="chat-box">
+        <div class="bot message">
+            👋 Hi! I’m <b>PolicyBot</b>.  
+            Ask me about returns, delivery, refunds, payments & more.
+        </div>
+    </div>
+
+    <div class="typing" id="typing">PolicyBot is typing...</div>
 
     <div class="input-area">
-        <input type="text" id="user-input" placeholder="Type your message..." />
-        <button onclick="sendMessage()">Send</button>
+        <input id="user-input" type="text" placeholder="Type your message here..." />
+        <button onclick="sendMessage()">➤</button>
     </div>
 </div>
 
