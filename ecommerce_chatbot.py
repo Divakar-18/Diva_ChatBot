@@ -4,6 +4,9 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+# -----------------------------
+# BOT LOGIC
+# -----------------------------
 def get_bot_response(user_input, last_answer=None):
     user_input = user_input.lower()
 
@@ -52,17 +55,27 @@ def get_bot_response(user_input, last_answer=None):
     else:
         return "Sorry, I didn't understand that. Type 'help' to see available topics."
 
+# -----------------------------
+# HEALTH CHECK
+# -----------------------------
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({"status": "Diva ChatBot API is Live 🚀"})
+
+# -----------------------------
+# CHAT API
+# -----------------------------
 @app.route("/chat", methods=["POST"])
 def chat():
-    data = request.json
+    data = request.get_json(force=True)
+
     user_message = data.get("message", "")
-    last_answer = data.get("last_answer", None)
+    last_answer = data.get("last_answer")
 
     bot_reply = get_bot_response(user_message, last_answer)
 
-    return jsonify({
-        "reply": bot_reply
-    })
+    return jsonify({"reply": bot_reply})
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# REQUIRED FOR VERCEL
+def handler(request, context):
+    return app(request, context)
