@@ -1,92 +1,68 @@
-import time
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
-def welcome():
-    print("="*50)
-    print("🤖 Welcome to our E-Commerce Policy Chatbot!")
-    name = input("👤 May I know your name? ")
-    print(f"Hello, {name}! How can I assist you today?")
-    print("Type 'help' anytime to see topics or 'exit' to quit.")
-    print("="*50)
-    return name
+app = Flask(__name__)
+CORS(app)
 
-def show_help():
-    print("\nHere are some topics you can ask about:")
-    print("1️⃣ Return Policy")
-    print("2️⃣ Delivery & Shipping")
-    print("3️⃣ Payment Methods & COD")
-    print("4️⃣ Order Cancellation")
-    print("5️⃣ Refunds")
-    print("6️⃣ Damaged or Wrong Products")
-    print("7️⃣ Warranty")
-    print("8️⃣ Offers & Coupons\n")
+def get_bot_response(user_input, last_answer=None):
+    user_input = user_input.lower()
 
-def chatbot():
-    name = welcome()
-    last_answer = None
+    if 'return' in user_input:
+        return "Returns are accepted within 7 days of delivery. Pickup is scheduled within 3 business days of approval."
 
-    while True:
-        user_input = input(f"{name}: ").lower()
+    elif 'delivery' in user_input or 'shipping' in user_input:
+        return "Delivery takes 5–7 business days. Delays can happen due to weather or logistics issues."
 
-        if 'exit' in user_input:
-            print("🤖 Bot: Thank you for chatting with us! Have a great day! 👋")
-            break
+    elif 'payment' in user_input or 'cod' in user_input:
+        return "We accept Credit/Debit cards, Net Banking, UPI, Wallets, and COD for orders below ₹10,000."
 
-        elif user_input in ['help', 'menu']:
-            show_help()
+    elif 'cancel' in user_input:
+        return "Orders can be cancelled before shipment. Once shipped, please follow the return process."
 
-        elif 'return' in user_input:
-            ans = "Returns are accepted within 7 days of delivery. Pickup is scheduled within 3 business days of approval."
-            print("🤖 Bot:", ans)
-            last_answer = ans
+    elif 'refund' in user_input:
+        return "Refunds are processed within 5–10 business days after verification."
 
-        elif 'delivery' in user_input or 'shipping' in user_input:
-            ans = "Delivery takes 5–7 business days. Delays can happen due to weather or logistics issues."
-            print("🤖 Bot:", ans)
-            last_answer = ans
+    elif 'damage' in user_input or 'wrong' in user_input:
+        return "Please report damaged or incorrect products with photos within 48 hours."
 
-        elif 'payment' in user_input or 'cod' in user_input:
-            ans = "We accept Credit/Debit cards, Net Banking, UPI, Wallets, and COD for orders below ₹10,000."
-            print("🤖 Bot:", ans)
-            last_answer = ans
+    elif 'warranty' in user_input:
+        return "For warranty claims, please contact the manufacturer."
 
-        elif 'cancel' in user_input:
-            ans = "Orders can be cancelled before shipment. Once shipped, please follow the return process."
-            print("🤖 Bot:", ans)
-            last_answer = ans
+    elif 'offer' in user_input or 'coupon' in user_input:
+        return "Only one coupon per order unless specified. Offers are time-limited."
 
-        elif 'refund' in user_input:
-            ans = "Refunds are processed within 5–10 business days after verification, to your original payment method."
-            print("🤖 Bot:", ans)
-            last_answer = ans
+    elif 'help' in user_input:
+        return (
+            "You can ask about:\n"
+            "• Return Policy\n"
+            "• Delivery & Shipping\n"
+            "• Payments & COD\n"
+            "• Order Cancellation\n"
+            "• Refunds\n"
+            "• Warranty\n"
+            "• Offers & Coupons"
+        )
 
-        elif 'damage' in user_input or 'wrong' in user_input:
-            ans = "Please report any damage or incorrect product with photo evidence within 48 hours of delivery."
-            print("🤖 Bot:", ans)
-            last_answer = ans
+    elif 'hi' in user_input or 'hello' in user_input:
+        return "Hello! How can I assist you today?"
 
-        elif 'warranty' in user_input:
-            ans = "For warranty claims, please contact the manufacturer directly."
-            print("🤖 Bot:", ans)
-            last_answer = ans
+    elif 'thanks' in user_input or 'thank you' in user_input:
+        return "You're welcome 😊"
 
-        elif 'offer' in user_input or 'coupon' in user_input:
-            ans = "Discounts and offers are valid only during the promotional period. Only one coupon per order is allowed unless specified."
-            print("🤖 Bot:", ans)
-            last_answer = ans
+    else:
+        return "Sorry, I didn't understand that. Type 'help' to see available topics."
 
-        elif 'repeat' in user_input:
-            if last_answer:
-                print("🤖 Bot (repeating):", last_answer)
-            else:
-                print("🤖 Bot: I haven't answered anything yet to repeat!")
+@app.route("/chat", methods=["POST"])
+def chat():
+    data = request.json
+    user_message = data.get("message", "")
+    last_answer = data.get("last_answer", None)
 
-        elif 'hi' in user_input or 'hello' in user_input:
-            print(f"🤖 Bot: Hi {name}! How can I help you today?")
+    bot_reply = get_bot_response(user_message, last_answer)
 
-        elif 'thanks' in user_input or 'thank you' in user_input:
-            print("🤖 Bot: You're welcome! 😊")
+    return jsonify({
+        "reply": bot_reply
+    })
 
-        else:
-            print("🤖 Bot: I'm sorry, I didn't quite catch that. Please type 'help' to see topics.")
-
-chatbot()
+if __name__ == "__main__":
+    app.run(debug=True)
